@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import { View, Text, ToastAndroid } from "react-native";
 import {FAB} from 'react-native-paper'
 
-const FloatingActionButton= ()=>{
-    const handleFabPress = () => {
+interface FloatingProps{
+    fun: ()=>void
+}
 
-    }
+const FloatingActionButton= ({fun}:FloatingProps)=>{
     return(
         <View style={{flex:1}}>
 
@@ -18,7 +19,7 @@ const FloatingActionButton= ()=>{
                         borderRadius: 30,
                     }}
                     label="+"
-                    onPress={()=>{ToastAndroid.show('Working!', ToastAndroid.SHORT);}}
+                    onPress={fun}
                     />
         </View>
     )

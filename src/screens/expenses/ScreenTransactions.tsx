@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,ToastAndroid } from 'react-native'
+import FloatingActionButton from '../../components/FloatingActionButton'
 import React from 'react'
+
+const addTransactions=()=>{
+  ToastAndroid.show('From Transactions', ToastAndroid.SHORT)
+}
 
 const ScreenTransactions = () => {
   return (
-    <View>
-      <Text>ScreenExpenses</Text>
+    <View style={{flex:1}}>
+      <FloatingActionButton fun={addTransactions}/>
     </View>
   )
 }
 
-export default ScreenTransactions
-
 const styles = StyleSheet.create({})
+
+
+export default ScreenTransactions
