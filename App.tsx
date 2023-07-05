@@ -1,25 +1,35 @@
 import React from 'react';
-import Counter from './src/Counter';
+import { NavigationContainer } from '@react-navigation/native';
+import {Appbar} from 'react-native-paper';
+import FloatingActionButton from './src/components/FloatingActionButton';
+import { createStackNavigator } from '@react-navigation/stack';
+import ScreenHome from './src/screens/home/ScreenHome';
+
 import {
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
   Dimensions,
+  ToastAndroid,
   View,
 } from 'react-native';
 
+const Stack = createStackNavigator();
 
 function App(): JSX.Element {
   const windowHeight = Dimensions.get('window').height;
   return (
-    <SafeAreaView>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic">
-        <View style={{alignItems: "center", height:windowHeight, flex:1,justifyContent:'center'}}>
-          <Counter/>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator
+    screenOptions={{
+      header: ({ navigation }) => (
+        <Appbar.Header>
+          <Appbar.Content title="Expense Tracker" />
+        </Appbar.Header>
+      ),
+    }}
+  >
+    <Stack.Screen name="Home" component={ScreenHome} />
+  </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
