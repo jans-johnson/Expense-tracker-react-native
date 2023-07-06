@@ -8,7 +8,7 @@ interface FloatingProps {
 
 const FloatingActionButton = ({fun}: FloatingProps) => {
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 0}}>
       <FAB
         style={{
           position: 'absolute',
