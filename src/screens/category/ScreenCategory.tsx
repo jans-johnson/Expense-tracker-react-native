@@ -32,7 +32,7 @@ const ScreenCategory = () => {
         data={categoryValues}
         renderItem={({item}) =>
           item.type === CategoryType.income ? (
-            <CategoryItem name={item.name} id={item.id} type={item.type} />
+            <CategoryItem name={item.name} id={item.id} type={item.type} updateData={updateData}/>
           ) : (
             <></>
           )
@@ -48,7 +48,7 @@ const ScreenCategory = () => {
         data={categoryValues}
         renderItem={({item}) =>
           item.type !== CategoryType.income ? (
-            <CategoryItem name={item.name} id={item.id} type={item.type} />
+            <CategoryItem name={item.name} id={item.id} type={item.type} updateData={updateData}/>
           ) : (
             <></>
           )

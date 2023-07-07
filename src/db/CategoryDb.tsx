@@ -1,6 +1,6 @@
 import { CategoryModel, CategoryType } from "../models/CategoryModel";
 
-export const categoryValues: CategoryModel[] = [
+export let categoryValues: CategoryModel[] = [
     {
       id: '0',
       name: 'salary',
@@ -20,4 +20,8 @@ export const categoryValues: CategoryModel[] = [
 
 export const insertCategory=(prop:CategoryModel)=>{
   categoryValues.push(prop)
+}
+
+export const removeCategory=(prop:CategoryModel)=>{
+  categoryValues=categoryValues.filter((value)=>value.id!!==prop.id)
 }

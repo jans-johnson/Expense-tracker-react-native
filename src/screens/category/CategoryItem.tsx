@@ -1,14 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { CategoryModel } from '../../models/CategoryModel'
+import { CategoryType } from '../../models/CategoryModel'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { categoryValues, removeCategory } from '../../db/CategoryDb';
 
-const CategoryItem = (item:CategoryModel) => {
+type CategoryModel = {
+  id: string;
+  name: string;
+  type: CategoryType;
+  updateData: () => void;
+};
+
+const CategoryItem = ({id,name,type,updateData}:CategoryModel) => {
   return (
     <View style={styles.categoryItem}>
-      <Text style={styles.textStyle}>{item.name}</Text>
-      <Icon name="delete" size={25} color="grey" />
+      <Text style={styles.textStyle}>{name}</Text>
+      <Icon name="delete" size={25} color="grey" onPress={()=>{
+        removeCategory({id,name,type})
+        updateData()
+      }}/>
     </View>
   )
 }
