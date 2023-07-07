@@ -10,7 +10,6 @@ const ScreenTransactions = () => {
   return (
     <View style={{flex: 1}}>
       <View style={{flex:1}}>
-        
       </View>
       <FloatingActionButton fun={addTransactions} />
     </View>

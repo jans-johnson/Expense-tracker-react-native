@@ -1,14 +1,12 @@
 import {StyleSheet, Text, View, ToastAndroid, FlatList} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import FloatingActionButton from '../../components/FloatingActionButton';
 import {CategoryModel, CategoryType} from '../../models/CategoryModel';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {Card} from 'react-native-paper';
 import CategoryItem from './CategoryItem';
+import AddCategory from './AddCategory';
 
-const addCategory = () => {
-  ToastAndroid.show('From Category', ToastAndroid.SHORT);
-};
 
 const categoryValues: CategoryModel[] = [
   {
@@ -65,12 +63,15 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
+
 const ScreenCategory = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Income'},
     {key: 'second', title: 'Expenses'},
   ]);
+
+  const [FabVisible,setFab] = useState(false)
 
   return (
     <View style={{flex: 1}}>
@@ -82,7 +83,8 @@ const ScreenCategory = () => {
           <TabBar {...props} style={{backgroundColor: 'grey'}} />
         )}
       />
-      <FloatingActionButton fun={addCategory} />
+      <FloatingActionButton fun={()=>setFab(true)} />
+      {FabVisible && <AddCategory/>}
     </View>
   );
 };
