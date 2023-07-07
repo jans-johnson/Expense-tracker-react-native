@@ -1,19 +1,28 @@
 import {StyleSheet, Text, View, ToastAndroid, FlatList} from 'react-native';
 import FloatingActionButton from '../../components/FloatingActionButton';
-import React from 'react';
+import React, {useState} from 'react';
 import {transactionValues} from '../../db/TransactoinDb';
 import TransactionItem from './TransactionItem';
+import AddTransaction from './AddTransaction';
 
-const addTransactions = () => {
-  ToastAndroid.show('From Transactions', ToastAndroid.SHORT);
-};
 
 const ScreenTransactions = () => {
+  const [FabVisible, setFab] = useState(false);
+  const [data, setData] = useState(transactionValues);
+
+  const setFabInvisible = () => {
+    setFab(false);
+  };
+
+  const updateData = () => {
+    setData(transactionValues);
+  };
+
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
         <FlatList
-          data={transactionValues}
+          data={data}
           renderItem={({item}) => (
             <TransactionItem
               id={item.id}
@@ -27,7 +36,8 @@ const ScreenTransactions = () => {
           keyExtractor={item => item.id}
         />
       </View>
-      <FloatingActionButton fun={addTransactions} />
+      <FloatingActionButton fun={() => setFab(true)} />
+      {FabVisible && <AddTransaction setFabInvisible={setFabInvisible} setData={updateData} />}
     </View>
   );
 };

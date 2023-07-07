@@ -28,3 +28,7 @@ export const transactionValues: Transaction[] = [
         category:categoryValues[2]
     },
   ];
+
+  export const insertTransaction=(prop:Transaction)=>{
+    transactionValues.push(prop)
+  }
