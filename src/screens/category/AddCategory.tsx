@@ -62,7 +62,7 @@ const AddCategory = ({
                 title="Add"
                 onPress={() => {
                   insertCategory({
-                    id: categoryValues.length.toString(),
+                    id: Date.now().toString(),
                     name: categoryName,
                     type:
                       checked === 'income'
