@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ScreenCategory from '../category/ScreenCategory';
-import ScreenTransactions from '../expenses/ScreenTransactions';
+import ScreenTransactions from '../transactions/ScreenTransactions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
