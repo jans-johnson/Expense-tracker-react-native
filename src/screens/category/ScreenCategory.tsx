@@ -1,67 +1,11 @@
-import {StyleSheet, Text, View, ToastAndroid, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import React, { useState } from 'react';
 import FloatingActionButton from '../../components/FloatingActionButton';
-import {CategoryModel, CategoryType} from '../../models/CategoryModel';
+import {CategoryType} from '../../models/CategoryModel';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {Card} from 'react-native-paper';
 import CategoryItem from './CategoryItem';
 import AddCategory from './AddCategory';
-
-
-const categoryValues: CategoryModel[] = [
-  {
-    id: '1',
-    name: 'salary',
-    type: CategoryType.income,
-  },
-  {
-    id: '2',
-    name: 'food',
-    type: CategoryType.expense,
-  },
-  {
-    id: '3',
-    name: 'random',
-    type: CategoryType.income,
-  },
-];
-
-const FirstRoute = () => (
-  <View>
-    <FlatList
-      data={categoryValues}
-      renderItem={({item}) =>
-        item.type === CategoryType.income ? (
-          <CategoryItem name={item.name} id={item.id} type={item.type} />
-        ) : (
-          <></>
-        )
-      }
-      keyExtractor={item => item.id}
-    />
-  </View>
-);
-
-const SecondRoute = () => (
-  <View>
-    <FlatList
-      data={categoryValues}
-      renderItem={({item}) =>
-        item.type !== CategoryType.income ? (
-          <CategoryItem name={item.name} id={item.id} type={item.type} />
-        ) : (
-          <></>
-        )
-      }
-      keyExtractor={item => item.id}
-    />
-  </View>
-);
-
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
+import { categoryValues } from '../../db/CategoryDb';
 
 
 const ScreenCategory = () => {
@@ -70,8 +14,55 @@ const ScreenCategory = () => {
     {key: 'first', title: 'Income'},
     {key: 'second', title: 'Expenses'},
   ]);
-
   const [FabVisible,setFab] = useState(false)
+
+  const [data,setData] = useState(categoryValues)
+
+  const setFabInvisible=()=>{
+    setFab(false)
+  }
+
+  const updateData=()=>{
+    setData(categoryValues)
+  }
+
+  const FirstRoute = () => (
+    <View>
+      <FlatList
+        data={categoryValues}
+        renderItem={({item}) =>
+          item.type === CategoryType.income ? (
+            <CategoryItem name={item.name} id={item.id} type={item.type} />
+          ) : (
+            <></>
+          )
+        }
+        keyExtractor={item => item.id}
+      />
+    </View>
+  );
+  
+  const SecondRoute = () => (
+    <View>
+      <FlatList
+        data={categoryValues}
+        renderItem={({item}) =>
+          item.type !== CategoryType.income ? (
+            <CategoryItem name={item.name} id={item.id} type={item.type} />
+          ) : (
+            <></>
+          )
+        }
+        keyExtractor={item => item.id}
+      />
+    </View>
+  );
+  
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
+  
 
   return (
     <View style={{flex: 1}}>
@@ -84,7 +75,7 @@ const ScreenCategory = () => {
         )}
       />
       <FloatingActionButton fun={()=>setFab(true)} />
-      {FabVisible && <AddCategory/>}
+      {FabVisible && <AddCategory fabInvisible={setFabInvisible} updateData={updateData}/>}
     </View>
   );
 };
