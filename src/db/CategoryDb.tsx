@@ -1,27 +1,38 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CategoryModel, CategoryType } from "../models/CategoryModel";
 
-export let categoryValues: CategoryModel[] = [
-    {
-      id: '0',
-      name: 'salary',
-      type: CategoryType.income,
-    },
-    {
-      id: '1',
-      name: 'food',
-      type: CategoryType.expense,
-    },
-    {
-      id: '2',
-      name: 'random',
-      type: CategoryType.income,
-    },
-  ];
+export let categoryValues: CategoryModel[] = [];
 
 export const insertCategory=(prop:CategoryModel)=>{
-  categoryValues.push(prop)
+  if(Array.isArray(categoryValues))
+    categoryValues.push(prop)
+  else
+    categoryValues=[{
+      id:prop.id,
+      name:prop.name,
+      type:prop.type
+    }]
+  storeCategoryData(categoryValues)
 }
 
 export const removeCategory=(prop:CategoryModel)=>{
   categoryValues=categoryValues.filter((value)=>value.id!!==prop.id)
 }
+
+export const getCategoryData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('category');
+    categoryValues= jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch (e) {
+    // error reading value
+  }
+};
+
+const storeCategoryData = async (value:CategoryModel[]) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('category', jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
