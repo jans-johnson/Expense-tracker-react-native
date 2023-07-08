@@ -29,7 +29,7 @@ const ScreenCategory = () => {
   const FirstRoute = () => (
     <View>
       <FlatList
-        data={categoryValues}
+        data={data}
         renderItem={({item}) =>
           item.type === CategoryType.income ? (
             <CategoryItem name={item.name} id={item.id} type={item.type} updateData={updateData}/>

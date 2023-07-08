@@ -123,7 +123,7 @@ const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,
                     purpose:purpose,
                     type:(checked==CategoryType.income)?CategoryType.income:CategoryType.expense
                   })
-
+                  setData()
                   setFabInvisible();
                 }}
               />

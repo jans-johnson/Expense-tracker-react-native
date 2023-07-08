@@ -1,34 +1,42 @@
-import { CategoryType } from "../models/CategoryModel";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Transaction } from "../models/TransactionModel";
-import { categoryValues } from "./CategoryDb";
 
-export const transactionValues: Transaction[] = [
-    {
-      id: '0',
-      purpose: 'salary- june',
-      amount:5000,
-      date:new Date("2019-01-16"),
-      type: CategoryType.income,
-      category:categoryValues[0]
-    },
-    {
-        id: '1',
-        purpose: 'oonu',
-        amount:50,
-        date:new Date("2019-02-16"),
-        type: CategoryType.expense,
-        category:categoryValues[1]
-    },
-    {
-        id: '2',
-        purpose: 'vazhiside',
-        amount:5000,
-        date:new Date("2023-01-16"),
-        type: CategoryType.income,
-        category:categoryValues[2]
-    },
-  ];
+export let transactionValues: Transaction[] = [];
 
   export const insertTransaction=(prop:Transaction)=>{
+    if(Array.isArray(transactionValues))
     transactionValues.push(prop)
+  else
+    transactionValues=[{
+      id:prop.id,
+      amount:prop.amount,
+      category:prop.category,
+      date:prop.date,
+      purpose:prop.purpose,
+      type:prop.type
+    }]
+  storeTransactionData(transactionValues)
   }
+
+  export const removeTransaction=(prop:Transaction)=>{
+    transactionValues=transactionValues.filter((value)=>value.id!!==prop.id)
+    storeTransactionData(transactionValues)
+  }
+  
+  export const getTransactionData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('transaction');
+      transactionValues= jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      // error reading value
+    }
+  };
+  
+  const storeTransactionData = async (value:Transaction[]) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('transaction', jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };

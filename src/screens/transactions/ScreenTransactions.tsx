@@ -1,28 +1,39 @@
 import {StyleSheet, Text, View, ToastAndroid, FlatList} from 'react-native';
 import FloatingActionButton from '../../components/FloatingActionButton';
-import React, {useState} from 'react';
-import {transactionValues} from '../../db/TransactoinDb';
+import React, {useState,useEffect} from 'react';
+import {getTransactionData, transactionValues} from '../../db/TransactoinDb';
 import TransactionItem from './TransactionItem';
 import AddTransaction from './AddTransaction';
 
 
 const ScreenTransactions = () => {
-  const [FabVisible, setFab] = useState(false);
-  const [data, setData] = useState(transactionValues);
+  
+  getTransactionData()
 
+  const [FabVisible, setFab] = useState(false);
+  const [transactionData, setTransactionData] = useState(transactionValues);
   const setFabInvisible = () => {
     setFab(false);
   };
 
-  const updateData = () => {
-    setData(transactionValues);
+   const updateTransactionData = () => {
+    setTransactionData(transactionValues);
   };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      await getTransactionData();
+      setTransactionData(transactionValues);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
         <FlatList
-          data={data}
+          data={transactionData}
           renderItem={({item}) => (
             <TransactionItem
               id={item.id}
@@ -37,7 +48,7 @@ const ScreenTransactions = () => {
         />
       </View>
       <FloatingActionButton fun={() => setFab(true)} />
-      {FabVisible && <AddTransaction setFabInvisible={setFabInvisible} setData={updateData} />}
+      {FabVisible && <AddTransaction setFabInvisible={setFabInvisible} setData={updateTransactionData} />}
     </View>
   );
 };

@@ -6,6 +6,7 @@ import ScreenHome from './src/screens/home/ScreenHome';
 
 import {StyleSheet, Dimensions, ToastAndroid, View} from 'react-native';
 import { categoryValues, getCategoryData } from './src/db/CategoryDb';
+import { getTransactionData } from './src/db/TransactoinDb';
 
 const Stack = createStackNavigator();
 

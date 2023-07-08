@@ -17,6 +17,7 @@ export const insertCategory=(prop:CategoryModel)=>{
 
 export const removeCategory=(prop:CategoryModel)=>{
   categoryValues=categoryValues.filter((value)=>value.id!!==prop.id)
+  storeCategoryData(categoryValues)
 }
 
 export const getCategoryData = async () => {

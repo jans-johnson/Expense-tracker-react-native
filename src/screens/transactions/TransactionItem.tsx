@@ -24,7 +24,7 @@ const TransactionItem = (props: Transaction) => {
         />
         <View style={{marginVertical:10, marginLeft:10, justifyContent:'space-around'}}>
           <Text style={styles.headingStyle}>{props.purpose}</Text>
-          <Text style={styles.dateStyle}>{props.date.toDateString().slice(4,10)}</Text>
+          <Text style={styles.dateStyle}>{new Date(props.date).toDateString().slice(4,10)}</Text>
         </View>
       </View>
       <Text style={(props.type===CategoryType.expense)?{color:'red',fontSize:20}:{color:'green',fontSize:20}}>{'\u20B9'} {props.amount}</Text>
