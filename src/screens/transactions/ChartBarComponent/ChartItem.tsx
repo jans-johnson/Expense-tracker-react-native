@@ -1,15 +1,23 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const ChartItem = () => {
+type chartItem={
+    highest:number,
+    current:number,
+    day:string
+}
+
+const ChartItem = ({highest,current,day}:chartItem) => {
+    
+  const windowHeight = Dimensions.get('window').height;
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>2</Text>
+      <Text style={styles.text}>{current}</Text>
       <View style={{justifyContent:'flex-end'}}>
-        <View style={styles.background} />
-        <View style={styles.bar} />
+        <View style={[styles.background,{height:windowHeight*0.11}]} />
+        <View style={[styles.bar,{height:windowHeight*0.11*(current/highest)}]} />
       </View>
-      <Text style={styles.text}>Mon</Text>
+      <Text style={styles.text}>{day}</Text>
     </View>
   );
 };
@@ -25,7 +33,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   background: {
-    height: 92,
     width: 8,
     borderWidth: 0.5,
     backgroundColor: 'lightgrey',
@@ -33,7 +40,6 @@ const styles = StyleSheet.create({
   },
   bar: {
     zIndex: 1,
-    height: 72,
     width: 8,
     borderWidth: 0.5,
     backgroundColor: 'blue',
