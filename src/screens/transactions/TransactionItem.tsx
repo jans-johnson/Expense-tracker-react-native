@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
     shadowColor: Colors.shadow,
     elevation: 5,
     flexDirection: 'row',
-    paddingLeft: 13,
+    paddingLeft: 7,
     paddingRight: 24,
     marginTop: 6,
     marginBottom: 6,
-    marginLeft: 16,
+    marginLeft: 6,
     marginRight: 6,
   },
   headingStyle: {

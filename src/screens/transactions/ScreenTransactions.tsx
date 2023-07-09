@@ -4,6 +4,7 @@ import React, {useState,useEffect} from 'react';
 import {getTransactionData, transactionValues} from '../../db/TransactoinDb';
 import TransactionItem from './TransactionItem';
 import AddTransaction from './AddTransaction';
+import ChartComponent from './ChartBarComponent/ChartComponent';
 
 
 const ScreenTransactions = () => {
@@ -32,6 +33,7 @@ const ScreenTransactions = () => {
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
+        <ChartComponent/>
         <FlatList
           data={transactionData}
           renderItem={({item}) => (
