@@ -1,5 +1,6 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import Colors from '../../../constants/colors';
 
 export type chartItem={
     highest:number,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   bar: {
     zIndex: 1,
     width: 8,
-    backgroundColor: 'blue',
+    backgroundColor: Colors.primary200,
     borderRadius: 5,
     position:'absolute'
   },

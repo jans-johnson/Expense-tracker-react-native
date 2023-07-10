@@ -7,6 +7,7 @@ import ScreenHome from './src/screens/home/ScreenHome';
 import {StyleSheet, Dimensions, ToastAndroid, View} from 'react-native';
 import { categoryValues, getCategoryData } from './src/db/CategoryDb';
 import { getTransactionData } from './src/db/TransactoinDb';
+import Colors from './src/constants/colors';
 
 const Stack = createStackNavigator();
 
@@ -17,8 +18,8 @@ function App(): JSX.Element {
       <Stack.Navigator
         screenOptions={{
           header: ({navigation}) => (
-            <Appbar.Header>
-              <Appbar.Content title="Expense Tracker" />
+            <Appbar.Header elevated style={{backgroundColor:Colors.primary200, paddingLeft:10}}>
+              <Appbar.Content title="Expense Tracker" color='white' />
             </Appbar.Header>
           ),
         }}>

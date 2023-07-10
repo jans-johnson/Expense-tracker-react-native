@@ -4,12 +4,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ScreenCategory from '../category/ScreenCategory';
 import ScreenTransactions from '../transactions/ScreenTransactions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Colors from '../../constants/colors';
 
 const Tab = createBottomTabNavigator();
 
 const ScreenHome = () => {
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}}>
+    <Tab.Navigator screenOptions={{headerShown: false,tabBarActiveTintColor:Colors.primary200}}>
       <Tab.Screen name="Transactions" component={ScreenTransactions} options={{
       tabBarLabel: 'Transactions',
       tabBarIcon: ({ color, size }) => (

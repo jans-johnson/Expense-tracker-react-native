@@ -6,6 +6,7 @@ import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import CategoryItem from './CategoryItem';
 import AddCategory from './AddCategory';
 import { categoryValues } from '../../db/CategoryDb';
+import Colors from '../../constants/colors';
 
 
 const ScreenCategory = () => {
@@ -71,7 +72,7 @@ const ScreenCategory = () => {
         renderScene={renderScene}
         onIndexChange={setIndex}
         renderTabBar={props => (
-          <TabBar {...props} style={{backgroundColor: 'grey'}} />
+          <TabBar {...props} style={{backgroundColor: Colors.primary200}} />
         )}
       />
       <FloatingActionButton fun={()=>setFab(true)} />
