@@ -1,7 +1,7 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-type chartItem={
+export type chartItem={
     highest:number,
     current:number,
     day:string
@@ -10,6 +10,7 @@ type chartItem={
 const ChartItem = ({highest,current,day}:chartItem) => {
     
   const windowHeight = Dimensions.get('window').height;
+  if(highest)
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{current}</Text>
@@ -20,6 +21,9 @@ const ChartItem = ({highest,current,day}:chartItem) => {
       <Text style={styles.text}>{day}</Text>
     </View>
   );
+  return(
+    <View/>
+  )
 };
 
 export default ChartItem;
@@ -41,7 +45,6 @@ const styles = StyleSheet.create({
   bar: {
     zIndex: 1,
     width: 8,
-    borderWidth: 0.5,
     backgroundColor: 'blue',
     borderRadius: 5,
     position:'absolute'
