@@ -1,15 +1,15 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {Appbar} from 'react-native-paper';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ScreenHome from './src/screens/home/ScreenHome';
 
 import {StyleSheet, Dimensions, ToastAndroid, View} from 'react-native';
 import { categoryValues, getCategoryData } from './src/db/CategoryDb';
-import { getTransactionData } from './src/db/TransactoinDb';
 import Colors from './src/constants/colors';
+import EditTransactionsScreen from './src/screens/EditTransactionsScreen';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator()
 
 function App(): JSX.Element {
   getCategoryData()
@@ -24,6 +24,7 @@ function App(): JSX.Element {
           ),
         }}>
         <Stack.Screen name="Home" component={ScreenHome} />
+        <Stack.Screen name='Edit' component={EditTransactionsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

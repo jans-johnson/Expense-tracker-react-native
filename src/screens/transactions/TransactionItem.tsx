@@ -1,34 +1,55 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Transaction} from '../../models/TransactionModel';
 import LinearGradient from 'react-native-linear-gradient';
 import {CategoryType} from '../../models/CategoryModel';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 
 const TransactionItem = (props: Transaction) => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
-    <View style={styles.categoryItem}>
-      <View style={{flexDirection: 'row', marginVertical:5}}>
-        <LinearGradient
-          colors={
-            props.type === CategoryType.income
-              ? ['rgba(0, 207, 2, 0.8)', 'rgba(0, 137, 0, 0.86)']
-              : ['rgba(240, 0, 0, 0.8)', 'rgba(151, 0, 0, 0.8)']
-          }
-          style={{
-            height: 60,
-            width: 60,
-            borderRadius: 30,
-            backgroundColor: 'red',
-            margin: 5,
-          }}
-        />
-        <View style={{marginVertical:10, marginLeft:10, justifyContent:'space-around'}}>
-          <Text style={styles.headingStyle}>{props.purpose}</Text>
-          <Text style={styles.dateStyle}>{new Date(props.date).toDateString().slice(4,10)}</Text>
+    <Pressable onPress={()=>navigation.push("Edit",{'prop':props})}
+    >
+      <View style={styles.categoryItem}>
+        <View style={{flexDirection: 'row', marginVertical: 5}}>
+          <LinearGradient
+            colors={
+              props.type === CategoryType.income
+                ? ['rgba(0, 207, 2, 0.8)', 'rgba(0, 137, 0, 0.86)']
+                : ['rgba(240, 0, 0, 0.8)', 'rgba(151, 0, 0, 0.8)']
+            }
+            style={{
+              height: 60,
+              width: 60,
+              borderRadius: 30,
+              backgroundColor: 'red',
+              margin: 5,
+            }}
+          />
+          <View
+            style={{
+              marginVertical: 10,
+              marginLeft: 10,
+              justifyContent: 'space-around',
+            }}>
+            <Text style={styles.headingStyle}>{props.purpose}</Text>
+            <Text style={styles.dateStyle}>
+              {new Date(props.date).toDateString().slice(4, 10)}
+            </Text>
+          </View>
         </View>
+        <Text
+          style={
+            props.type === CategoryType.expense
+              ? {color: 'red', fontSize: 20}
+              : {color: 'green', fontSize: 20}
+          }>
+          {'\u20B9'} {props.amount}
+        </Text>
       </View>
-      <Text style={(props.type===CategoryType.expense)?{color:'red',fontSize:20}:{color:'green',fontSize:20}}>{'\u20B9'} {props.amount}</Text>
-    </View>
+    </Pressable>
   );
 };
 
@@ -53,9 +74,9 @@ const styles = StyleSheet.create({
   headingStyle: {
     color: 'black',
     fontSize: 18,
-    fontWeight:'700'
+    fontWeight: '700',
   },
-  dateStyle:{
-    color: 'grey'
-  }
+  dateStyle: {
+    color: 'grey',
+  },
 });
