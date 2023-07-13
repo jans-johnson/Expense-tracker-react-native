@@ -18,11 +18,23 @@ import {insertTransaction} from '../../db/TransactoinDb';
 import { CategoryType } from '../../models/CategoryModel';
 
 const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,setData:()=>void}) => {
-  const [checked, setChecked] = React.useState('income');
-  const [purpose, setPurpose] = React.useState('');
-  const [amount, setAmount] = React.useState('');
+  const [inputValues,setInputValues] = React.useState({
+    checked: 'income',
+    purpose: '',
+    amount: '',
+    date: new Date()
+  })
+
+  function inputChangeHandler (inputIdentifier:string, enteredValue:string|Date){
+    setInputValues((currentInputValues)=>{
+      return{
+        ...currentInputValues,
+        [inputIdentifier]:enteredValue
+      }
+    })
+  }
+  
   const [calendarVisible, showCalendar] = React.useState(false);
-  const [selectedDate, changeDate] = React.useState(new Date());
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const [dropdownValue, setDropdownValue] = React.useState(null);
 
@@ -38,18 +50,18 @@ const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,
         <View style={styles.constainerStyle}>
           <TextInput
             editable
-            onChangeText={(text: string) => setPurpose(text)}
+            onChangeText={(text: string) => inputChangeHandler('purpose',text)}
             style={styles.textInput}
             placeholder="Purpose"
-            value={purpose}
+            value={inputValues.purpose}
             placeholderTextColor={'grey'}
           />
           <TextInput
             editable
-            onChangeText={(text: string) => setAmount(text)}
+            onChangeText={(text: string) => inputChangeHandler('amount',text)}
             style={styles.textInput}
             placeholder="Amount"
-            value={amount}
+            value={inputValues.amount}
             keyboardType="numeric"
             placeholderTextColor={'grey'}
           />
@@ -65,7 +77,7 @@ const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,
                 style={{marginRight: 10}}
               />
               <Text style={styles.textStyle}>
-                {selectedDate.toDateString()}
+                {inputValues.date.toDateString()}
               </Text>
             </View>
           </Pressable>
@@ -73,10 +85,10 @@ const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,
             modal
             mode="date"
             open={calendarVisible}
-            date={selectedDate}
+            date={inputValues.date}
             onConfirm={date => {
               showCalendar(false);
-              changeDate(date);
+              inputChangeHandler('date',date);
             }}
             onCancel={() => {
               showCalendar(false);
@@ -85,14 +97,14 @@ const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,
           <View style={{flexDirection: 'row', marginTop: 10}}>
             <RadioButton
               value="income"
-              status={checked === 'income' ? 'checked' : 'unchecked'}
-              onPress={() => setChecked('income')}
+              status={inputValues.checked === 'income' ? 'checked' : 'unchecked'}
+              onPress={() => inputChangeHandler('checked','income')}
             />
             <Text style={styles.textStyle}>Income</Text>
             <RadioButton
               value="expense"
-              status={checked === 'expense' ? 'checked' : 'unchecked'}
-              onPress={() => setChecked('expense')}
+              status={inputValues.checked=== 'expense' ? 'checked' : 'unchecked'}
+              onPress={() => inputChangeHandler('checked','expense')}
             />
             <Text style={styles.textStyle}>Expense</Text>
           </View>
@@ -101,7 +113,7 @@ const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,
             open={isOpenDropdown}
             value={dropdownValue}
             items={categoryValues
-              .filter(item => item.type === checked)
+              .filter(item => item.type === inputValues.checked)
               .map(item => {
                 return {label: item.name, value: item.id};
               })}
@@ -115,13 +127,13 @@ const AddTransaction = ({setFabInvisible,setData}: {setFabInvisible: () => void,
                 onPress={() => {
                   insertTransaction({
                     id: Date.now().toString(),
-                    amount: parseInt(amount),
+                    amount: parseInt(inputValues.amount),
                     category: categoryValues.filter(
                       item => item.id == dropdownValue,
                     )[0],
-                    date:selectedDate,
-                    purpose:purpose,
-                    type:(checked==CategoryType.income)?CategoryType.income:CategoryType.expense
+                    date:inputValues.date,
+                    purpose:inputValues.purpose,
+                    type:(inputValues.checked==CategoryType.income)?CategoryType.income:CategoryType.expense
                   })
                   setData()
                   setFabInvisible();
